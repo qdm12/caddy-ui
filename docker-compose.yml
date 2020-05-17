@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  REPONAME_DOCKER:
+    build: .
+    image: qmcgaw/REPONAME_DOCKER
+    container_name: REPONAME_DOCKER
+    ports:
+      - 8080:8080/tcp
+    restart: always

@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  vscode:
+    image: qmcgaw/reactdevcontainer
+    volumes:
+      - node_modules:/workspace/node_modules
+      - ../:/workspace
+      - ~/.ssh:/home/vscode/.ssh:ro
+      - ~/.ssh:/root/.ssh:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=America/Montreal
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    entrypoint: zsh -c "while sleep 1000; do :; done"
+    ports:
+      - 3000/tcp
+
+volumes:
+  node_modules:

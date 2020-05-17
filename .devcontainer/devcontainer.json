@@ -1,0 +1,81 @@
+{
+    "name": "REPONAME_GITHUB-dev",
+    "dockerComposeFile": ["docker-compose.yml"],
+    "service": "vscode",
+    "runServices": ["vscode"],
+    "shutdownAction": "stopCompose",
+    "postCreateCommand": "yarn install",
+    "workspaceFolder": "/workspace",
+    // "overrideCommand": "",
+    "extensions": [
+        // General frontend
+        "bierner.color-info",
+        "cssho.vscode-svgviewer",
+        "JakeWilson.vscode-cdnjs",
+        // React
+        "jpoissonnier.vscode-styled-components",
+        // General javascript/typescript
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "esbenp.prettier-vscode",
+        "visualstudioexptteam.vscodeintellicode",
+        "christian-kohler.npm-intellisense",
+        "eg2.vscode-npm-script",
+        // Console
+        "IBM.output-colorizer",
+        // Git
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        // Other linters
+        "davidanson.vscode-markdownlint",
+        "ms-azuretools.vscode-docker",
+        // Other helpers
+        "shardulm94.trailing-spaces",
+        "Gruntfuggly.todo-tree",
+        "bierner.emojisense",
+        "stkb.rewrap", // rewrap comments after n characters on one line
+        // Other
+        "jrebocho.vscode-random", // generate random values
+        "alefragnani.Bookmarks",
+        "quicktype.quicktype", // Paste JSON as code
+        "spikespaz.vscode-smoothtype", // smooth cursor animation
+        "vscode-icons-team.vscode-icons",
+        "github.vscode-pull-request-github"
+    ],
+    "settings": {
+        // General settings
+        "files.eol": "\n",
+        // Docker
+        "remote.extensionKind": {
+            "ms-azuretools.vscode-docker": "workspace"
+        },
+        // Javascript
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        "eslint.validate": [
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact"
+        ],
+        "editor.formatOnSave": true,
+        "[javascript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "editor.formatOnSave": false
+          },
+          "[javascriptreact]": {
+              "editor.defaultFormatter": "esbenp.prettier-vscode",
+              "editor.formatOnSave": false
+          },
+          "[typescript]": {
+              "editor.defaultFormatter": "esbenp.prettier-vscode",
+              "editor.formatOnSave": false
+          },
+          "[typescriptreact]": {
+              "editor.defaultFormatter": "esbenp.prettier-vscode",
+              "editor.formatOnSave": false
+          },
+          "prettier-eslint.eslintIntegration": true
+    }
+}
