@@ -1,6 +1,6 @@
 {
-  "short_name": "REPONAME_GITHUB",
-  "name": "REPONAME_GITHUB",
+  "short_name": "caddy-ui",
+  "name": "caddy-ui",
   "icons": [
     {
       "src": "favicon.ico",

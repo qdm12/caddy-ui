@@ -1,5 +1,5 @@
 {
-    "name": "REPONAME_GITHUB-dev",
+    "name": "caddy-ui-dev",
     "dockerComposeFile": ["docker-compose.yml"],
     "service": "vscode",
     "runServices": ["vscode"],

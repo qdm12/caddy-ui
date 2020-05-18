@@ -1,9 +1,9 @@
 version: '3.7'
 services:
-  REPONAME_DOCKER:
+  caddy-ui:
     build: .
-    image: qmcgaw/REPONAME_DOCKER
-    container_name: REPONAME_DOCKER
+    image: qmcgaw/caddy-ui
+    container_name: caddy-ui
     ports:
       - 8080:8080/tcp
     restart: always
