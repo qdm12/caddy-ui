@@ -1,6 +1,8 @@
 # Caddy UI
 
-*SHORT_DESCRIPTION*
+⚠️ Under construction and not functional yet ⚠️
+
+*Caddy UI is a web frontend to interact with the Caddy server*
 
 <img height="200" src="title.svg?sanitize=true">
 
@@ -17,30 +19,8 @@
 
 ## Features
 
-- Compatible with `amd64`, `386`, `arm64`, `arm32v7`, `arm32v6`, `ppc64le` and `s390x` CPU architectures.
+- Compatible with `amd64` CPU architectures.
 - [Docker image tags and sizes](https://hub.docker.com/r/qmcgaw/caddy-ui/tags)
-
-## Setup
-
-1. Use the following command:
-
-    ```sh
-    docker run -d qmcgaw/caddy-ui
-    ```
-
-    You can also use [docker-compose.yml](https://github.com/qdm12/caddy-ui/blob/master/docker-compose.yml) with:
-
-    ```sh
-    docker-compose up -d
-    ```
-
-1. You can update the image with `docker pull qmcgaw/caddy-ui:latest` or use one of [tags available](https://hub.docker.com/r//qmcgaw/caddy-ui/tags)
-
-### Environment variables
-
-| Environment variable | Default | Possible values | Description |
-| --- | --- | --- | --- |
-|  |  |  |  |
 
 ## Development
 
@@ -83,7 +63,10 @@
 ## TODOs
 
 - [ ] Change public icons and logos
-- [ ] Write some dummy tests
+- [ ] Wire up with Caddy API
+- [ ] Unit tests
+- [ ] Readme instructions
+- [ ] Bundle in qmcgaw/caddy-scratch
 
 ## License
 
