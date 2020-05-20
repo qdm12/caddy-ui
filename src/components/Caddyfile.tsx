@@ -50,6 +50,7 @@ function Caddyfile(): JSX.Element {
         rows={rows}
         cols={cols}
         onChange={handleChange}
+        spellCheck="false"
       />
     </div>
   );
