@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Title from "components/Title";
 import Actions from "components/Actions";
 import Caddyfile from "components/Caddyfile";
+import Address from "components/Address";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,9 +24,13 @@ const useStyles = makeStyles(theme => ({
 
 function App(): JSX.Element {
   const classes = useStyles();
+  const handleAddressChange = (address: string): void => {
+    console.log(address);
+  };
   return (
     <div className={classes.root}>
       <Title />
+      <Address onChange={handleAddressChange} />
       <div className={classes.rowContainer}>
         <Actions />
         <Caddyfile />
