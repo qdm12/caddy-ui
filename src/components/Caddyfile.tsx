@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Palette from "constants/palette";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,10 +15,17 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2),
   },
   textfield: {
-    borderRadius: 10,
-    backgroundColor: "#dcdcf5",
-    color: "#151517",
+    borderRadius: 6,
+    backgroundColor: Palette.textAreaBackground,
+    color: Palette.textAreaFont,
     padding: theme.spacing(2),
+    fontWeight: "bold",
+    border: "2px solid",
+    borderColor: Palette.textAreaBorder,
+    transition: "all 0.5s ease",
+    "&:hover": {
+      borderColor: Palette.textAreaBorderHover,
+    },
   },
   innerInput: {
     padding: theme.spacing(2),

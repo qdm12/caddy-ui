@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import Palette from "constants/palette";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,18 +19,27 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center",
     fontSize: 20,
     fontWeight: 500,
-    marginBottom: 15,
+    marginBottom: theme.spacing(2),
+    color: Palette.font,
   },
   action: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     padding: 8,
-    border: "2px solid #343463",
-    color: "white",
+    border: "2px solid",
+    color: Palette.font,
     background: "none",
-    boxShadow: "5px 3px 5px #505057",
+    boxShadow: `5px 3px 5px ${Palette.boxShadow}`,
     marginBottom: 10,
+    transition: "all 0.5s ease",
+    borderColor: Palette.actionBorder,
+    "&:hover": {
+      borderColor: Palette.actionBorderHover,
+    },
+    "&:focus": {
+      borderColor: Palette.actionBorderFocus,
+    },
   },
   actionIcon: {
     width: 20,

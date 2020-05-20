@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Palette from "constants/palette";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,10 +16,20 @@ const useStyles = makeStyles(theme => ({
   input: {
     maxWidth: 250,
     padding: theme.spacing(1),
-    border: "2px solid #373463",
-    color: "white",
-    background: "#becdcf",
+    border: "2px solid",
+    borderRadius: 5,
+    borderColor: Palette.inputBorder,
+    color: Palette.inputFont,
+    background: Palette.inputBackground,
     fontWeight: "bold",
+    transition: "all 0.5s ease",
+    "&:hover": {
+      borderColor: Palette.inputBorderHover,
+    },
+    "&:focus": {
+      borderColor: Palette.inputBorderFocus,
+      backgroundColor: Palette.inputBackgroundFocus,
+    },
   },
 }));
 
