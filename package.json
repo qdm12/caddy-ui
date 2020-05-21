@@ -11,6 +11,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.53",
     "@material-ui/styles": "^4.9.14",
     "clsx": "^1.1.0",
     "react": "^16.13.0",
