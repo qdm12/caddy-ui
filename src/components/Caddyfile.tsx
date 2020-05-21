@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     border: "2px solid",
     borderColor: Palette.textAreaBorder,
-    transition: "all 0.5s ease",
+    transition: "all 0.25s ease",
     "&:hover": {
       borderColor: Palette.textAreaBorderHover,
     },
@@ -32,29 +32,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Caddyfile(): JSX.Element {
+interface Props {
+  content: string;
+  onChange: (content: string) => void;
+}
+
+function Caddyfile(props: Props): JSX.Element {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const initialContent = `https://mydomain.com {
-  proxy / host.docker.internal:8080
-  proxy /myapp host.docker.internal:8081
-  proxy /myotherapp host.docker.internal:8082 {
-    without /myotherapp
-  }
-}`;
-  const [content, setContent] = React.useState(initialContent);
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => setContent(event.target.value);
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    props.onChange(event.target.value);
+  };
   const rows = isMobile ? 25 : 60;
   const cols = isMobile ? 40 : 80;
-
   return (
     <div className={classes.root}>
       <div className={classes.title}>Caddyfile configuration</div>
       <textarea
         className={classes.textfield}
         autoFocus
-        value={content}
+        value={props.content}
         rows={rows}
         cols={cols}
         onChange={handleChange}

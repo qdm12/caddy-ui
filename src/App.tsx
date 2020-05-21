@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Title from "components/Title";
 import Actions from "components/Actions";
 import Caddyfile from "components/Caddyfile";
-import InputBar from "components/InputBar";
 import Palette from "constants/palette";
+import { getCaddyfile as apiGetCaddyfile, setCaddyfile as apiSetCaddyfile } from "api/caddyfile";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,18 +31,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function App(): JSX.Element {
+  const apiEndpoint = `${window.location.href}/api`; // Caddy UI API
   const classes = useStyles();
-  const handleAddressChange = (address: string): void => {
-    console.log(address);
+  const [caddyfileContent, setCaddyfileContent] = React.useState("");
+  const getCaddyfile = async (): Promise<void> => {
+    setCaddyfileContent(await apiGetCaddyfile(apiEndpoint));
   };
+  const refresh = (): void => {
+    getCaddyfile();
+  };
+  const upload = (): void => {
+    apiSetCaddyfile(apiEndpoint, caddyfileContent);
+  };
+  React.useEffect(refresh);
   return (
     <div className={classes.root}>
       <div className={classes.background} />
       <Title />
-      <InputBar label="Caddy API endpoint" defaultValue="http://localhost:2019" onChange={handleAddressChange} />
       <div className={classes.rowContainer}>
-        <Actions />
-        <Caddyfile />
+        <Actions handleRefresh={refresh} handleUpload={upload} />
+        <Caddyfile content={caddyfileContent} onChange={(content: string): void => setCaddyfileContent(content)} />
       </div>
     </div>
   );

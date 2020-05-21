@@ -19,9 +19,6 @@
 
 ## Features
 
-- Compatible with `amd64` CPU architectures.
-- [Docker image tags and sizes](https://hub.docker.com/r/qmcgaw/caddy-ui/tags)
-
 ## Development
 
 1. Setup your environment
@@ -63,10 +60,9 @@
 ## TODOs
 
 - [ ] Change public icons and logos
-- [ ] Wire up with Caddy API
+- [ ] Wire up with Caddy UI server
 - [ ] Unit tests
 - [ ] Readme instructions
-- [ ] Bundle in qmcgaw/caddy-scratch
 
 ## License
 

@@ -1,7 +1,6 @@
 version: '3.7'
 services:
   caddy-ui:
-    build: .
     image: qmcgaw/caddy-ui
     container_name: caddy-ui
     ports:
