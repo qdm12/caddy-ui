@@ -34,22 +34,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface Props {
+  label?: string;
+  defaultValue?: string;
   onChange: (s: string) => void;
 }
 
-function Address(props: Props): JSX.Element {
+function InputBar(props: Props): JSX.Element {
   const classes = useStyles();
-  const [value, setValue] = React.useState("http://localhost:2019");
+  const defaultValue = props.defaultValue ? props.defaultValue : "";
+  const [value, setValue] = React.useState(defaultValue);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(event.target.value);
     props.onChange(event.target.value);
   };
   return (
     <div className={classes.root}>
-      <div className={classes.label}>Caddy API endpoint</div>
+      {props.label && <div className={classes.label}>{props.label}</div>}
       <input className={classes.input} value={value} onChange={handleChange} spellCheck="false"></input>
     </div>
   );
 }
 
-export default Address;
+export default InputBar;

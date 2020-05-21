@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Title from "components/Title";
 import Actions from "components/Actions";
 import Caddyfile from "components/Caddyfile";
-import Address from "components/Address";
+import InputBar from "components/InputBar";
 import Palette from "constants/palette";
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +39,7 @@ function App(): JSX.Element {
     <div className={classes.root}>
       <div className={classes.background} />
       <Title />
-      <Address onChange={handleAddressChange} />
+      <InputBar label="Caddy API endpoint" defaultValue="http://localhost:2019" onChange={handleAddressChange} />
       <div className={classes.rowContainer}>
         <Actions />
         <Caddyfile />
