@@ -37,8 +37,8 @@ interface Props {
 function Refresh(props: Props): JSX.Element {
   const classes = useStyles();
   return (
-    <button className={classes.root}>
-      <RefreshIcon className={classes.icon} onClick={props.handleClick} />
+    <button className={classes.root} onClick={props.handleClick}>
+      <RefreshIcon className={classes.icon} />
       <span>Refresh</span>
     </button>
   );
