@@ -13,7 +13,3 @@ RUN yarn test --ci --coverage
 
 FROM base AS react-builder
 RUN yarn build
-
-FROM scratch
-COPY --from=react-builder --chown=1000 /workspace/build/ /srv/
-USER 1000
