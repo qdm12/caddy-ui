@@ -11,5 +11,8 @@ FROM base AS tester
 RUN yarn lint
 RUN yarn test --ci --coverage
 
-FROM base AS react-builder
+FROM base AS builder
 RUN yarn build
+
+FROM scratch
+COPY --from=builder --chown=1000:1000 /workspace/build/ /ui/
