@@ -3,8 +3,8 @@ export async function getCaddyfile(address: string): Promise<string> {
     method: "GET",
   });
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(`cannot get Caddyfile: ${message} (${response.statusText})`);
+    const obj = await response.json();
+    throw new Error(`cannot get Caddyfile: ${obj.error} (${response.statusText})`);
   }
   if (response.body !== null) {
     return await response.text();
@@ -19,8 +19,8 @@ export async function setCaddyfile(address: string, content: string): Promise<st
     headers: { "Content-Type": "application/octet-stream" },
   });
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(`cannot set Caddyfile: ${message} (${response.statusText})`);
+    const obj = await response.json();
+    throw new Error(`cannot set Caddyfile: ${obj.error} (${response.statusText})`);
   }
   if (response.body !== null) {
     return await response.text();
