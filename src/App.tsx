@@ -33,8 +33,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function App(): JSX.Element {
-  const apiEndpoint = `${window.location.href}/api`; // Caddy UI API
+  const apiEndpoint = `${window.location.href}api`;
   const classes = useStyles();
+  const firstRun = React.useRef(true);
   const [caddyfileContent, setCaddyfileContent] = React.useState("");
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -67,9 +68,12 @@ function App(): JSX.Element {
     }
   };
   const hydrate = (): void => {
-    try {
-      getCaddyfile();
-    } catch (e) {}
+    if (firstRun.current.valueOf()) {
+      try {
+        getCaddyfile();
+      } catch (e) {}
+      firstRun.current = false;
+    }
   };
   const refresh = (): void => {
     try {
