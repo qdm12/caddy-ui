@@ -9,7 +9,7 @@ COPY . .
 
 FROM base AS tester
 RUN yarn lint
-RUN yarn test --ci --coverage
+RUN CI=1 yarn test --ci
 
 FROM base AS builder
 RUN yarn build
