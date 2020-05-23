@@ -4,7 +4,7 @@
 
 <img height="200" src="https://raw.githubusercontent.com/qdm12/caddy-ui/master/title.svg?sanitize=true">
 
-[![Web build status](https://github.com/qdm12/caddy-ui/workflows/build/badge.svg)](https://github.com/qdm12/caddy-ui/actions?query=workflow%3A%22build%22)
+[![Web build status](https://github.com/qdm12/caddy-ui/workflows/Docker%20build/badge.svg)](https://github.com/qdm12/caddy-ui/actions?query=workflow%3A%22Docker+build%22)
 [![Docker build status](https://github.com/qdm12/caddy-ui-server/workflows/Buildx%20latest/badge.svg)](https://github.com/qdm12/caddy-ui-server/actions?query=workflow%3A%22Buildx+latest%22)
 [![Docker Pulls](https://img.shields.io/docker/pulls/qmcgaw/caddy-ui.svg)](https://hub.docker.com/r/qmcgaw/caddy-ui)
 [![Docker Stars](https://img.shields.io/docker/stars/qmcgaw/caddy-ui.svg)](https://hub.docker.com/r/qmcgaw/caddy-ui)
