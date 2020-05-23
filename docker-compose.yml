@@ -1,8 +1,20 @@
-version: '3.7'
+version: "3.7"
 services:
-  caddy-ui:
-    image: qmcgaw/caddy-ui
-    container_name: caddy-ui
+  caddy:
+    image: qmcgaw/caddy-scratch
+    command: run --resume
+    container_name: caddy
+    expose:
+      - 2019/tcp
     ports:
       - 8080:8080/tcp
-    restart: always
+      - 8443:8443/tcp
+    environment:
+      - TZ=
+  caddy-ui:
+    build: .
+    image: qmcgaw/caddy-ui
+    ports:
+      - 8000:8000/tcp
+    environment:
+      - CADDY_API_ENDPOINT=http://caddy:2019
