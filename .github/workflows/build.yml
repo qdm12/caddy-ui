@@ -2,21 +2,34 @@ name: Docker build
 on:
   pull_request:
     branches: [master]
+    paths-ignore:
+      - .devcontainer
+      - .github/workflows/labels.yml
+      - .github/workflows/security.yml
+      - .github/CODEOWNERS
+      - .github/CONTRIBUTING.md
+      - .github/FUNDING.yml
+      - .github/labels.yml
+      - .gitignore
+      - docker-compose.yml
+      - LICENSE
+      - README.md
+      - title.svg
   push:
     branches: [master]
-  paths-ignore:
-    - .devcontainer
-    - .github/workflows/labels.yml
-    - .github/workflows/security.yml
-    - .github/CODEOWNERS
-    - .github/CONTRIBUTING.md
-    - .github/FUNDING.yml
-    - .github/labels.yml
-    - .gitignore
-    - docker-compose.yml
-    - LICENSE
-    - README.md
-    - title.svg
+    paths-ignore:
+      - .devcontainer
+      - .github/workflows/labels.yml
+      - .github/workflows/security.yml
+      - .github/CODEOWNERS
+      - .github/CONTRIBUTING.md
+      - .github/FUNDING.yml
+      - .github/labels.yml
+      - .gitignore
+      - docker-compose.yml
+      - LICENSE
+      - README.md
+      - title.svg
 jobs:
   build:
     runs-on: ubuntu-latest
