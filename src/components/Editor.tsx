@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Palette from "constants/palette";
+import { Collapse } from "@material-ui/core";
 // TODO import jsYaml from "js-yaml";
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +15,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+  },
+  errorLine: {
+    marginBottom: theme.spacing(1),
+    color: "#fc2c03",
+    fontWeight: "bold",
   },
   textfield: {
     width: "100%",
@@ -45,6 +51,7 @@ interface Props {
 function Editor(props: Props): JSX.Element {
   const classes = useStyles();
   const [jsonString, setJsonString] = useState("{}");
+  const [syntaxError, setSyntaxError] = useState("");
   try {
     const editorConfig = JSON.parse(jsonString);
     if (JSON.stringify(editorConfig) !== JSON.stringify(props.config)) {
@@ -57,11 +64,19 @@ function Editor(props: Props): JSX.Element {
     try {
       const newConfig = JSON.parse(s);
       props.onChange(newConfig);
-    } catch (e) {}
+      setSyntaxError("");
+    } catch (e) {
+      if (e instanceof SyntaxError && e.message !== syntaxError) {
+        setSyntaxError(e.message);
+      }
+    }
   };
   return (
     <div className={classes.root}>
       <div className={classes.title}>Caddy configuration</div>
+      <Collapse in={syntaxError !== ""}>
+        <div className={classes.errorLine}>{syntaxError}</div>
+      </Collapse>
       <textarea className={classes.textfield} value={jsonString} onChange={handleChange} spellCheck="false" />
     </div>
   );
