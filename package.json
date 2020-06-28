@@ -6,7 +6,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}'"
+    "lint": "tsc --noEmit && eslint --ext ts,tsx ."
   },
   "dependencies": {
     "@material-ui/core": "^4.10.2",
