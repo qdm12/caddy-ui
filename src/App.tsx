@@ -86,7 +86,7 @@ function App(): JSX.Element {
       <Snackbar open={showSuccess} autoHideDuration={2000} onClose={(): void => setShowSuccess(false)}>
         <Alert severity="success">Success</Alert>
       </Snackbar>
-      <Snackbar open={showError} autoHideDuration={2000} onClose={clearError}>
+      <Snackbar open={showError} autoHideDuration={2000 * (1 + errorRef.current.length / 100)} onClose={clearError}>
         <Alert severity="error">{errorRef.current}</Alert>
       </Snackbar>
     </div>
