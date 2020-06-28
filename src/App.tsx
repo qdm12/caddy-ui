@@ -21,7 +21,6 @@ const uiApiEndpoint = `${window.location.href}api`; // "http://localhost:8000/ap
 function App(): JSX.Element {
   const classes = useStyles();
   const [config, setConfig] = useState({});
-  const [forcedEditorConfig, setForcedEditorConfig] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const errorRef = useRef("");
@@ -79,7 +78,6 @@ function App(): JSX.Element {
       <Title />
       <Actions handleDownload={downloadConfig} handleUpload={uploadConfig} />
       <Editor
-        forcedConfig={forcedEditorConfig}
         config={config}
         onChange={(newConfig: Record<string, unknown>): void => {
           setConfig(newConfig);

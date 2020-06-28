@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Palette from "constants/palette";
 // TODO import jsYaml from "js-yaml";
@@ -38,32 +38,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  forcedConfig: Record<string, unknown>;
   config: Record<string, unknown>;
   onChange: (newConfig: Record<string, unknown>) => void;
 }
 
 function Editor(props: Props): JSX.Element {
   const classes = useStyles();
-  const lastForcedConfigRef = useRef({});
-  const lastValidConfigRef = useRef({});
   const [jsonString, setJsonString] = useState("{}");
-  if (JSON.stringify(lastForcedConfigRef.current) !== JSON.stringify(props.forcedConfig)) {
-    lastForcedConfigRef.current = props.forcedConfig;
-    lastValidConfigRef.current = props.forcedConfig;
-    setJsonString(JSON.stringify(props.forcedConfig, null, 2));
-  }
-  if (JSON.stringify(lastValidConfigRef.current) !== JSON.stringify(props.config)) {
-    setJsonString(JSON.stringify(props.config, null, 2));
-    lastValidConfigRef.current = props.config;
-  }
-
+  try {
+    const editorConfig = JSON.parse(jsonString);
+    if (JSON.stringify(editorConfig) !== JSON.stringify(props.config)) {
+      setJsonString(JSON.stringify(props.config, null, 2));
+    }
+  } catch (e) { }
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const s = event.target.value;
     setJsonString(s);
     try {
       const newConfig = JSON.parse(s);
-      lastValidConfigRef.current = newConfig;
       props.onChange(newConfig);
     } catch (e) {}
   };
