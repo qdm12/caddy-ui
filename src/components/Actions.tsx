@@ -4,19 +4,15 @@ import Palette from "constants/palette";
 import Upload from "components/Upload";
 import Refresh from "components/Refresh";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    padding: 15,
-    flexGrow: 1,
-    [theme.breakpoints.down("md")]: {
-      width: "50%",
-    },
+    padding: theme.spacing(0, 4),
   },
   title: {
     width: "100%",
-    textAlign: "center",
+    textAlign: "left",
     fontSize: 20,
     fontWeight: 500,
     marginBottom: theme.spacing(2),
