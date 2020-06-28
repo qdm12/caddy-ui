@@ -10,10 +10,14 @@ services:
       - 8443:8443/tcp
     environment:
       - TZ=
+    volumes:
+      - caddy:/caddydir
   caddy-ui:
-    build: .
     image: qmcgaw/caddy-ui
     ports:
       - 8000:8000/tcp
     environment:
       - CADDY_API_ENDPOINT=http://caddy:2019
+
+volumes:
+  caddy:
