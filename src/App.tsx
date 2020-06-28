@@ -24,12 +24,18 @@ function App(): JSX.Element {
   const [forcedEditorConfig, setForcedEditorConfig] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
-  const errorRef = useRef(null);
+  const errorRef = useRef("");
 
+  const setError = (s: string): void => {
+    if (s !== errorRef.current) {
+      errorRef.current = s;
+      setShowError(true);
+    }
+  };
   const clearError = (): void => {
     setShowError(false);
     setTimeout((): void => {
-      errorRef.current = null;
+      errorRef.current = "";
     }, 100);
   };
 
@@ -40,29 +46,19 @@ function App(): JSX.Element {
         setShowSuccess(true);
       }
       setConfig(newConfig);
-      setForcedEditorConfig(newConfig);
     } catch (e) {
-      const s = e.toString();
-      if (s !== errorRef.current) {
-        errorRef.current = s;
-        setShowError(true);
-      }
+      setError(e.toString());
     }
   };
 
   const uploadConfig = async (): Promise<void> => {
     try {
-      const response = await APISetConfig(uiApiEndpoint, config);
-      console.log(response); // TODO
+      await APISetConfig(uiApiEndpoint, config);
       if (!showSuccess) {
         setShowSuccess(true);
       }
     } catch (e) {
-      const s = e.toString();
-      if (s !== errorRef.current) {
-        errorRef.current = s;
-        setShowError(true);
-      }
+      setError(e.toString());
     }
   };
 
@@ -72,8 +68,7 @@ function App(): JSX.Element {
         const newConfig = await APIGetConfig(uiApiEndpoint);
         setConfig(newConfig);
       } catch (e) {
-        errorRef.current = e.toString();
-        setShowError(true);
+        setError(e.toString());
       }
     };
     fetchData();
