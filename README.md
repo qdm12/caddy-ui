@@ -72,6 +72,7 @@
 | `LISTENING_PORT` | `8000` | Internal listening TCP port |
 | `ROOT_URL` | `/` | URL path, used if behind a reverse proxy |
 | `TZ` | `America/Montreal` | Timezone string |
+| `CORS_WHITELIST` |  | Comma separated list of hosts to whitelist for CORS, use only for development |
 
 ### Update
 
