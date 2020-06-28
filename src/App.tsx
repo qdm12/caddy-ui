@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-const uiApiEndpoint = `${window.location.host}/api`; // "http://localhost:8000/api"
+const uiApiEndpoint = `${window.location.href}api`; // "http://localhost:8000/api"
 
 function App(): JSX.Element {
   const classes = useStyles();
