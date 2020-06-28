@@ -57,7 +57,7 @@ function Editor(props: Props): JSX.Element {
     if (JSON.stringify(editorConfig) !== JSON.stringify(props.config)) {
       setJsonString(JSON.stringify(props.config, null, 2));
     }
-  } catch (e) { }
+  } catch (e) {}
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const s = event.target.value;
     setJsonString(s);

@@ -1,13 +1,17 @@
+interface ErrorObj {
+  error: string;
+}
+
 export async function getConfig(address: string): Promise<Record<string, unknown>> {
   const response = await fetch(address + "/config", { method: "GET" });
   if (!response.ok) {
-    const obj = await response.json();
+    const obj: ErrorObj = await response.json();
     throw new Error(`cannot get configuraiton: ${obj.error} (${response.statusText})`);
   }
   return await response.json();
 }
 
-export async function setConfig(address: string, obj: Record<string, unknown>): Promise<string> {
+export async function setConfig(address: string, obj: Record<string, unknown>): Promise<void> {
   const jsonString = JSON.stringify(obj);
   const response = await fetch(address + "/load", {
     method: "POST",
@@ -15,11 +19,12 @@ export async function setConfig(address: string, obj: Record<string, unknown>): 
     headers: { "Content-Type": "application/json" },
   });
   if (!response.ok) {
-    const obj = await response.json();
+    let obj: ErrorObj;
+    try {
+      obj = await response.json();
+    } catch (e) {
+      throw new Error(`cannot set configuration: ${response.statusText}`);
+    }
     throw new Error(`cannot set configuration: ${obj.error} (${response.statusText})`);
   }
-  if (response.body !== null) {
-    return JSON.stringify(await response.json());
-  }
-  return "";
 }
