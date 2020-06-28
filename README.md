@@ -29,7 +29,7 @@
 
 ## Setup
 
-1. **If you run Caddy in a container**, make the admin api listen on `0.0.0.0:2019`and ensure Caddy's port `2019` is reachable somehow (i.e. with `-p 2019:2019/tcp`).
+1. **If you run Caddy in a container**, make the admin api listen on `0.0.0.0:2019`and ensure Caddy's port `2019` is reachable somehow (i.e. with `-p 2019:2019/tcp`). You should also run caddy with `--resume` so that it uses its auto saved json configuration when it is restarted.
 1. Run this container:
 
     ```sh
@@ -44,6 +44,7 @@
         caddy:
           image: qmcgaw/caddy-scratch
           container_name: caddy
+          command: --resume
           expose:
             - 2019:2019/tcp
           ports:
