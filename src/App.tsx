@@ -1,105 +1,100 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Title from "components/Title";
 import Actions from "components/Actions";
-import Caddyfile from "components/Caddyfile";
+import Editor from "components/Editor";
 import Palette from "constants/palette";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import { getCaddyfile as apiGetCaddyfile, setCaddyfile as apiSetCaddyfile } from "api/caddyfile";
+import { getConfig as APIGetConfig, setConfig as APISetConfig } from "services/caddy";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {
     width: "100%",
     backgroundColor: Palette.background,
     color: Palette.font,
   },
-  background: {
-    position: "fixed",
-    width: "100%",
-    height: "100%",
-    backgroundColor: Palette.background,
-    zIndex: -1,
-  },
-  rowContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    [theme.breakpoints.down("md")]: {
-      flexDirection: "column",
-      justifyContent: "start",
-    },
-  },
-}));
+});
+
+const uiApiEndpoint = `${window.location.host}/api`; // "http://localhost:8000/api"
 
 function App(): JSX.Element {
-  const apiEndpoint = `${window.location.href}api`;
   const classes = useStyles();
-  const firstRun = React.useRef(true);
-  const [caddyfileContent, setCaddyfileContent] = React.useState("");
-  const [showSuccess, setShowSuccess] = React.useState(false);
-  const [error, setError] = React.useState(null);
+  const [config, setConfig] = useState({});
+  const [forcedEditorConfig, setForcedEditorConfig] = useState({});
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const errorRef = useRef(null);
+
   const clearError = (): void => {
-    setError(null);
+    setShowError(false);
+    setTimeout((): void => {
+      errorRef.current = null;
+    }, 100);
   };
-  const getCaddyfile = async (): Promise<void> => {
+
+  const downloadConfig = async (): Promise<void> => {
     try {
-      const content = await apiGetCaddyfile(apiEndpoint);
-      setCaddyfileContent(content);
+      const newConfig = await APIGetConfig(uiApiEndpoint);
+      if (!showSuccess) {
+        setShowSuccess(true);
+      }
+      setConfig(newConfig);
+      setForcedEditorConfig(newConfig);
     } catch (e) {
       const s = e.toString();
-      if (s !== error) {
-        setError(s);
+      if (s !== errorRef.current) {
+        errorRef.current = s;
+        setShowError(true);
       }
-      throw e;
     }
   };
-  const setCaddyfile = async (): Promise<void> => {
+
+  const uploadConfig = async (): Promise<void> => {
     try {
-      await apiSetCaddyfile(apiEndpoint, caddyfileContent);
+      const response = await APISetConfig(uiApiEndpoint, config);
+      console.log(response); // TODO
       if (!showSuccess) {
         setShowSuccess(true);
       }
     } catch (e) {
       const s = e.toString();
-      if (s !== error) {
-        setError(s);
+      if (s !== errorRef.current) {
+        errorRef.current = s;
+        setShowError(true);
       }
     }
   };
-  const hydrate = (): void => {
-    if (firstRun.current.valueOf()) {
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        getCaddyfile();
-      } catch (e) {}
-      firstRun.current = false;
-    }
-  };
-  const refresh = (): void => {
-    try {
-      getCaddyfile();
-      if (!showSuccess) {
-        setShowSuccess(true);
+        const newConfig = await APIGetConfig(uiApiEndpoint);
+        setConfig(newConfig);
+      } catch (e) {
+        errorRef.current = e.toString();
+        setShowError(true);
       }
-    } catch (e) {}
-  };
-  const upload = (): void => {
-    setCaddyfile();
-  };
-  React.useEffect(hydrate);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className={classes.root}>
-      <div className={classes.background} />
       <Title />
-      <div className={classes.rowContainer}>
-        <Actions handleRefresh={refresh} handleUpload={upload} />
-        <Caddyfile content={caddyfileContent} onChange={(content: string): void => setCaddyfileContent(content)} />
-      </div>
+      <Actions handleDownload={downloadConfig} handleUpload={uploadConfig} />
+      <Editor
+        forcedConfig={forcedEditorConfig}
+        config={config}
+        onChange={(newConfig: Record<string, unknown>): void => {
+          setConfig(newConfig);
+        }}
+      />
       <Snackbar open={showSuccess} autoHideDuration={2000} onClose={(): void => setShowSuccess(false)}>
         <Alert severity="success">Success</Alert>
       </Snackbar>
-      <Snackbar open={error !== null} autoHideDuration={2000} onClose={clearError}>
-        <Alert severity="error">{error}</Alert>
+      <Snackbar open={showError} autoHideDuration={2000} onClose={clearError}>
+        <Alert severity="error">{errorRef.current}</Alert>
       </Snackbar>
     </div>
   );

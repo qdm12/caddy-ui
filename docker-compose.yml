@@ -2,7 +2,6 @@ version: "3.7"
 services:
   caddy:
     image: qmcgaw/caddy-scratch
-    command: run --resume
     container_name: caddy
     expose:
       - 2019/tcp

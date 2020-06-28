@@ -3,17 +3,18 @@ import { makeStyles } from "@material-ui/core/styles";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import Palette from "constants/palette";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
+    width: 250,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    padding: 8,
+    padding: theme.spacing(1),
     border: "2px solid",
     color: Palette.font,
     background: "none",
     boxShadow: `5px 3px 5px ${Palette.boxShadow}`,
-    marginBottom: 10,
+    marginBottom: theme.spacing(1),
     transition: "all 0.5s ease",
     borderColor: Palette.actionBorder,
     "&:hover": {
@@ -21,6 +22,7 @@ const useStyles = makeStyles(theme => ({
     },
     "&:focus": {
       borderColor: Palette.actionBorderFocus,
+      outline: 0,
     },
   },
   icon: {
@@ -34,14 +36,14 @@ interface Props {
   handleClick: () => void;
 }
 
-function Refresh(props: Props): JSX.Element {
+function Download(props: Props): JSX.Element {
   const classes = useStyles();
   return (
     <button className={classes.root} onClick={props.handleClick}>
       <RefreshIcon className={classes.icon} />
-      <span>Refresh</span>
+      <span>Reload config from Caddy</span>
     </button>
   );
 }
 
-export default Refresh;
+export default Download;

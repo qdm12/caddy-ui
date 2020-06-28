@@ -2,6 +2,8 @@
 
 *Caddy UI is a web frontend to interact with the Caddy server*
 
+⚠️ This is under heavy development, expect some breaking changes or non functional images!
+
 <img height="200" src="https://raw.githubusercontent.com/qdm12/caddy-ui/master/title.svg?sanitize=true">
 
 [![Web build status](https://github.com/qdm12/caddy-ui/workflows/Docker%20build/badge.svg)](https://github.com/qdm12/caddy-ui/actions?query=workflow%3A%22Docker+build%22)
@@ -18,71 +20,58 @@
 
 ## Features
 
+- Edit your Caddy server configuration in JSON
 - Works with Caddy v2.0.0 (you can use [this Docker image](https://github.com/qdm12/caddy-scratch))
 - Compatible with `amd64`, `386`, `arm64` and `arm32v7` CPU architectures
 - Runs without root
+- Tiny Docker image of 11MB
 - Docker image tags and sizes are available [here](https://hub.docker.com/r/qmcgaw/caddy-ui/tags)
 
 ## Setup
 
-### With an existing Caddyfile
-
-1. **If you run Caddy in a container**, add to your Caddyfile global configuration block `admin 0.0.0.0:2019` and reload the configuration. Ensure Caddy's port `2019` is reachable somehow (i.e. with `-p 2019:2019/tcp`).
-1. As Caddy v2.0.0 persists automatically its configuration in *autosave.json*, your Caddyfile will be used exclusively by the caddy-ui container. Therefore, change your Caddy command to `caddy run --resume` (with the Docker image `qmcgaw/caddy-scratch`, run it with `docker run ... qmcgaw/caddy-scratch run --resume`)
-1. Create a `data` directory and move your Caddyfile in `data/Caddyfile`
-1. As this container is running without root as user with id `1000`, change the ownership and permission of the data directory on your host:
+1. **If you run Caddy in a container**, make the admin api listen on `0.0.0.0:2019`and ensure Caddy's port `2019` is reachable somehow (i.e. with `-p 2019:2019/tcp`).
+1. Run this container:
 
     ```sh
-    chown -R 1000 data
-    chmod -R 700 data
+    docker run -d -p 8000:8000/tcp -e CADDY_API_ENDPOINT="http://somehost:2019" qmcgaw/caddy-ui
     ```
 
-1. Assuming your current file path is `yourpath`, run the container with:
-
-    ```sh
-    docker run -d -p 8000:8000/tcp -e CADDY_API_ENDPOINT=http://host.docker.internal:2019 -v /yourpath/data:/data qmcgaw/caddy-ui
-    ```
-
-    You can also use docker-compose with `docker-compose up -d` and the following docker-compose.yml:
+    You can also use docker-compose with `docker-compose up -d` and the following [docker-compose.yml](https://github.com/qdm12/caddy-ui/blob/master/docker-compose.yml):
 
     ```yml
     version: "3.7"
       services:
+        caddy:
+          image: qmcgaw/caddy-scratch
+          container_name: caddy
+          expose:
+            - 2019:2019/tcp
+          ports:
+            - 8080:8080/tcp
+            - 8443:8443/tcp
+          environment:
+            - TZ=
         caddy-ui:
-            image: qmcgaw/caddy-ui
-            ports:
-              - 8000:8000/tcp
-            environment:
-              - CADDY_API_ENDPOINT=http://host.docker.internal:2019
-            volumes:
-              - ./data:/data
+          image: qmcgaw/caddy-ui
+          ports:
+            - 8000:8000/tcp
+          environment:
+            - CADDY_API_ENDPOINT=http://caddy:2019
     ```
 
 1. Access the web app at [http://localhost:8000](http://localhost:8000).
 
-### With a new Caddyfile
+### Environment variables
 
-The following only uses [docker-compose](https://docs.docker.com/compose/install/) for simplicity, although you can do without it in more steps.
-
-1. Download [docker-compose.yml](https://github.com/qdm12/caddy-ui/blob/master/docker-compose.yml)
-1. Run the Caddy container alone once so that it auto saves the default Caddyfile:
-
-    ```sh
-    docker-compose up -d caddy
-    docker-compose stop caddy
-    ```
-
-    This is needed such that the Caddy API is accessible by 0.0.0.0:2019 instead of the built-in localhost:2019.
-1. In docker-compose.yml, uncomment the line `command: run --resume`. This makes Caddy run from the last successful config it used, even if it no Caddyfile is provided (the `autosave.json` is stored in an anonymous volume at `/caddydir`).
-1. Launch the Caddy container and the Caddy UI server container with
-
-    ```sh
-    docker-compose up -d
-    ```
-
-    By default, your caddy-ui data (only the Caddyfile for now) is persisted in another anonymous Docker volume at `/data`.
-
-1. Access the web app at [http://localhost:8000](http://localhost:8000).
+| Environment variable | Default | Description |
+| --- | --- | --- |
+| `CADDY_API_ENDPOINT` | `http://localhost:2019` | Caddy API endpoint address |
+| `LOG_ENCODING` | `console` | Logging format, can be `json` or `console` |
+| `LOG_LEVEL` | `info` | Logging level, can be `debug`, `info`, `warning`, `error` |
+| `NODE_ID` | `-1` | Node ID for logger (`-1` to disable) |
+| `LISTENING_PORT` | `8000` | Internal listening TCP port |
+| `ROOT_URL` | `/` | URL path, used if behind a reverse proxy |
+| `TZ` | `America/Montreal` | Timezone string |
 
 ### Update
 
@@ -130,10 +119,9 @@ You might want to first refer to the [Caddy UI Server repository](https://github
 
 ## TODOs
 
+- [ ] Check editor content on upload click
 - [ ] Change public icons and logos
-- [ ] Wire up with Caddy UI server
 - [ ] Unit tests
-- [ ] Readme instructions
 - [ ] Refresh modal
 
 ## License

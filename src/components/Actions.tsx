@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Palette from "constants/palette";
 import Upload from "components/Upload";
-import Refresh from "components/Refresh";
+import Download from "components/Download";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   handleUpload: () => void;
-  handleRefresh: () => void;
+  handleDownload: () => void;
 }
 
 function Actions(props: Props): JSX.Element {
@@ -31,7 +31,7 @@ function Actions(props: Props): JSX.Element {
     <div className={classes.root}>
       <div className={classes.title}>Actions</div>
       <Upload handleClick={props.handleUpload} />
-      <Refresh handleClick={props.handleRefresh} />
+      <Download handleClick={props.handleDownload} />
     </div>
   );
 }
