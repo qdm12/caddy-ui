@@ -3,7 +3,7 @@ services:
   caddy:
     image: qmcgaw/caddy-scratch
     container_name: caddy
-    command: --resume
+    command: run --resume
     expose:
       - 2019/tcp
     ports:
