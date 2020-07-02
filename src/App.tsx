@@ -11,6 +11,7 @@ import { getConfig as APIGetConfig, setConfig as APISetConfig } from "services/c
 const useStyles = makeStyles({
   root: {
     width: "100%",
+    minHeight: "100vh",
     backgroundColor: Palette.background,
     color: Palette.font,
   },
