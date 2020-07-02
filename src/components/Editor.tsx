@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 import Palette from "constants/palette";
 import { Collapse } from "@material-ui/core";
-// TODO import jsYaml from "js-yaml";
+import jsYaml, { YAMLException } from "js-yaml";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,9 +38,36 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       borderColor: Palette.textAreaBorderHover,
     },
+    [theme.breakpoints.down("sm")]: {
+      height: 300,
+    },
   },
-  [theme.breakpoints.down("sm")]: {
-    height: 300,
+  syntaxChoices: {
+    display: "flex",
+    flexDirection: "row",
+    width: 100,
+    justifyContent: "space-between",
+    marginBottom: theme.spacing(1),
+  },
+  syntaxButton: {
+    fontSize: 11,
+    padding: theme.spacing(1),
+    border: "2px solid",
+    color: Palette.font,
+    background: "none",
+    boxShadow: `5px 3px 5px ${Palette.boxShadow}`,
+    transition: "all 0.5s ease",
+    borderColor: Palette.actionBorder,
+    "&:hover": {
+      borderColor: Palette.actionBorderHover,
+    },
+    "&:focus": {
+      borderColor: Palette.actionBorderFocus,
+      outline: 0,
+    },
+  },
+  syntaxButtonSelected: {
+    backgroundColor: Palette.selected,
   },
 }));
 
@@ -50,34 +78,64 @@ interface Props {
 
 function Editor(props: Props): JSX.Element {
   const classes = useStyles();
-  const [jsonString, setJsonString] = useState("{}");
+  const [syntax, setSyntax] = useState("json");
+  const [text, setText] = useState("{}");
   const [syntaxError, setSyntaxError] = useState("");
+  const syntaxIsJSON = syntax === "json";
+
   try {
-    const editorConfig = JSON.parse(jsonString);
+    const editorConfig = syntaxIsJSON ? JSON.parse(text) : jsYaml.safeLoad(text);
     if (JSON.stringify(editorConfig) !== JSON.stringify(props.config)) {
-      setJsonString(JSON.stringify(props.config, null, 2));
+      const newText = syntaxIsJSON ? JSON.stringify(props.config, null, 2) : jsYaml.safeDump(props.config);
+      setText(newText);
     }
-  } catch (e) {}
+  } catch (e) {} // fix syntax first
+
+  const changeSyntax = (newSyntax: string) => (): void => {
+    if (newSyntax === syntax) {
+      return;
+    }
+    const newSyntaxIsJSON = newSyntax === "json";
+    try {
+      const editorConfig = newSyntaxIsJSON ? jsYaml.safeLoad(text) : JSON.parse(text);
+      const newText = newSyntaxIsJSON ? JSON.stringify(editorConfig, null, 2) : jsYaml.safeDump(editorConfig);
+      setText(newText);
+      setSyntax(newSyntax);
+    } catch (e) {} // fix syntax first
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const s = event.target.value;
-    setJsonString(s);
+    setText(s);
     try {
-      const newConfig = JSON.parse(s);
-      props.onChange(newConfig);
+      const newConfig = syntaxIsJSON ? JSON.parse(s) : jsYaml.safeLoad(s);
       setSyntaxError("");
+      props.onChange(newConfig);
     } catch (e) {
-      if (e instanceof SyntaxError && e.message !== syntaxError) {
+      if ((e instanceof SyntaxError || e instanceof YAMLException) && e.message !== syntaxError) {
         setSyntaxError(e.message);
       }
     }
   };
+
+  const classNameJsonButton = clsx(classes.syntaxButton, syntaxIsJSON && classes.syntaxButtonSelected);
+  const classNameYmlButton = clsx(classes.syntaxButton, !syntaxIsJSON && classes.syntaxButtonSelected);
+
   return (
     <div className={classes.root}>
       <div className={classes.title}>Caddy configuration</div>
+      <div className={classes.syntaxChoices}>
+        <button className={classNameJsonButton} onClick={changeSyntax("json")}>
+          JSON
+        </button>
+        <button className={classNameYmlButton} onClick={changeSyntax("yml")}>
+          YML
+        </button>
+      </div>
       <Collapse in={syntaxError !== ""}>
         <div className={classes.errorLine}>{syntaxError}</div>
       </Collapse>
-      <textarea className={classes.textfield} value={jsonString} onChange={handleChange} spellCheck="false" />
+      <textarea className={classes.textfield} value={text} onChange={handleChange} spellCheck="false" />
     </div>
   );
 }

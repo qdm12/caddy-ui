@@ -16,6 +16,8 @@ const colors = {
   actionBorderHover: "white",
   actionBorderFocus: "#42cfff",
 
+  selected: "#22717a",
+
   textAreaBackground: "#cedadb",
   textAreaFont: "black",
   textAreaBorder: "#343463",

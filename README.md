@@ -20,7 +20,7 @@
 
 ## Features
 
-- Edit your Caddy server configuration in JSON
+- Edit your Caddy server configuration in JSON or YML
 - Works with Caddy v2.0.0 (you can use [this Docker image](https://github.com/qdm12/caddy-scratch))
 - Compatible with `amd64`, `386`, `arm64` and `arm32v7` CPU architectures
 - Runs without root
