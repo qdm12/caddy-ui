@@ -17,7 +17,9 @@ const useStyles = makeStyles({
   },
 });
 
-const uiApiEndpoint = `${window.location.href}api`; // "http://localhost:8000/api"
+const development = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+
+const uiApiEndpoint = development ? "http://localhost:8000/api" : `${window.location.href}api`;
 
 function App(): JSX.Element {
   const classes = useStyles();
