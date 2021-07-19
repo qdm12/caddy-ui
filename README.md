@@ -4,7 +4,7 @@
 
 ⚠️ This is under heavy development, expect some breaking changes or non functional images!
 
-<img height="200" src="https://raw.githubusercontent.com/qdm12/caddy-ui/master/title.svg?sanitize=true">
+<img height="200" src="https://raw.githubusercontent.com/qdm12/caddy-ui/main/title.svg">
 
 [![Web build status](https://github.com/qdm12/caddy-ui/workflows/Docker%20build/badge.svg)](https://github.com/qdm12/caddy-ui/actions?query=workflow%3A%22Docker+build%22)
 [![Docker build status](https://github.com/qdm12/caddy-ui-server/workflows/Buildx%20latest/badge.svg)](https://github.com/qdm12/caddy-ui-server/actions?query=workflow%3A%22Buildx+latest%22)
