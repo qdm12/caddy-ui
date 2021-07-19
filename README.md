@@ -8,13 +8,6 @@
 
 [![Web build status](https://github.com/qdm12/caddy-ui/workflows/Docker%20build/badge.svg)](https://github.com/qdm12/caddy-ui/actions?query=workflow%3A%22Docker+build%22)
 [![Docker build status](https://github.com/qdm12/caddy-ui-server/workflows/Buildx%20latest/badge.svg)](https://github.com/qdm12/caddy-ui-server/actions?query=workflow%3A%22Buildx+latest%22)
-[![Docker Pulls](https://img.shields.io/docker/pulls/qmcgaw/caddy-ui.svg)](https://hub.docker.com/r/qmcgaw/caddy-ui)
-[![Docker Stars](https://img.shields.io/docker/stars/qmcgaw/caddy-ui.svg)](https://hub.docker.com/r/qmcgaw/caddy-ui)
-
-[![Join Slack channel](https://img.shields.io/badge/slack-@qdm12-yellow.svg?logo=slack)](https://join.slack.com/t/qdm12/shared_invite/enQtOTE0NjcxNTM1ODc5LTYyZmVlOTM3MGI4ZWU0YmJkMjUxNmQ4ODQ2OTAwYzMxMTlhY2Q1MWQyOWUyNjc2ODliNjFjMDUxNWNmNzk5MDk)
-[![GitHub last commit](https://img.shields.io/github/last-commit/qdm12/caddy-ui.svg)](https://github.com/qdm12/caddy-ui/issues)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/y/qdm12/caddy-ui.svg)](https://github.com/qdm12/caddy-ui/issues)
-[![GitHub issues](https://img.shields.io/github/issues/qdm12/caddy-ui.svg)](https://github.com/qdm12/caddy-ui/issues)
 
 ## Features
 
