@@ -18,7 +18,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-is": "^16.13.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "4.0.3"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.18.1",
