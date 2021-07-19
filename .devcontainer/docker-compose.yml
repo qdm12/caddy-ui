@@ -2,19 +2,29 @@ version: "3.7"
 
 services:
   vscode:
+    build: .
     image: qmcgaw/reactdevcontainer
     volumes:
+      # Docker volume to contain node_modules for performance reason
       - node_modules:/workspace/node_modules
       - ../:/workspace
-      - ~/.ssh:/home/vscode/.ssh:ro
-      - ~/.ssh:/root/.ssh:ro
+      # Docker
+      - ~/.docker:/root/.docker:z
+      # Docker socket to access Docker server
       - /var/run/docker.sock:/var/run/docker.sock
+      # SSH directory for Linux, OSX and WSL
+      - ~/.ssh:/root/.ssh:z
+      # For Windows without WSL, a copy will be made
+      # from /tmp/.ssh to ~/.ssh to fix permissions
+      # - ~/.ssh:/tmp/.ssh:ro
+      # Shell history persistence
+      - ~/.zsh_history:/root/.zsh_history:z
+      # Git config
+      - ~/.gitconfig:/root/.gitconfig:z
+      # Kubernetes
+      # - ~/.kube:/root/.kube:z
     environment:
-      - TZ=America/Montreal
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - seccomp:unconfined
+      - TZ=
     entrypoint: zsh -c "while sleep 1000; do :; done"
     ports:
       - 3000/tcp

@@ -4,52 +4,39 @@
     "service": "vscode",
     "runServices": ["vscode"],
     "shutdownAction": "stopCompose",
-    "postCreateCommand": "yarn install",
+    "postCreateCommand": "source ~/.windows.sh",
     "workspaceFolder": "/workspace",
     // "overrideCommand": "",
     "extensions": [
-        // General frontend
-        "bierner.color-info",
-        "cssho.vscode-svgviewer",
-        "JakeWilson.vscode-cdnjs",
-        // React
-        "jpoissonnier.vscode-styled-components",
-        // General javascript/typescript
-        "dbaeumer.vscode-eslint",
-        "ms-vscode.vscode-typescript-tslint-plugin",
-        "esbenp.prettier-vscode",
-        "visualstudioexptteam.vscodeintellicode",
-        "christian-kohler.npm-intellisense",
-        "eg2.vscode-npm-script",
-        // Console
-        "IBM.output-colorizer",
-        // Git
-        "eamodio.gitlens",
-        "mhutchie.git-graph",
-        // Other linters
+        "dbaeumer.vscode-eslint", // ESLint
+        "esbenp.prettier-vscode", // Prettier code formatter
+        "bierner.color-info", // JSX and CSS color information
+        "jpoissonnier.vscode-styled-components", // Styled components
+        "visualstudioexptteam.vscodeintellicode", // AI-assisted development
+        "eg2.vscode-npm-script", // NPM support for VS code
+        "christian-kohler.npm-intellisense", // Autocompletes npm modules in import statements
+        "cssho.vscode-svgviewer", // SVG viewer
+        "eamodio.gitlens", // IDE Git information
+        "ms-azuretools.vscode-docker", // Docker integration and linting
+        "shardulm94.trailing-spaces", // Show trailing spaces
         "davidanson.vscode-markdownlint",
-        "ms-azuretools.vscode-docker",
-        // Other helpers
-        "shardulm94.trailing-spaces",
-        "Gruntfuggly.todo-tree",
-        "bierner.emojisense",
+        "IBM.output-colorizer", // Colorize your output/test logs
+        "Gruntfuggly.todo-tree", // Highlights TODO comments
+        "bierner.emojisense", // Emoji sense for markdown
         "stkb.rewrap", // rewrap comments after n characters on one line
-        // Other
-        "jrebocho.vscode-random", // generate random values
-        "alefragnani.Bookmarks",
-        "quicktype.quicktype", // Paste JSON as code
-        "spikespaz.vscode-smoothtype", // smooth cursor animation
-        "vscode-icons-team.vscode-icons",
-        "github.vscode-pull-request-github"
+        "vscode-icons-team.vscode-icons", // Better file extension icons
+        "github.vscode-pull-request-github", // Github interaction
+        // "JakeWilson.vscode-cdnjs", // Search and embed libraries from cdnjs.com
+        // "alefragnani.Bookmarks",
+        // "quicktype.quicktype", // Paste JSON as code
+        // "spikespaz.vscode-smoothtype", // smooth cursor animation
     ],
     "settings": {
-        // General settings
         "files.eol": "\n",
-        // Docker
+        "editor.tabSize": 2,
         "remote.extensionKind": {
             "ms-azuretools.vscode-docker": "workspace"
         },
-        // Javascript
         "editor.codeActionsOnSave": {
             "source.fixAll.eslint": true
         },
